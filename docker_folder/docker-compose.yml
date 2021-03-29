@@ -1,0 +1,50 @@
+version: "3.1"
+services:
+
+   #PHP Service
+   app-php-fpm:
+     build:
+       context: .
+       dockerfile: ./php-fpm/Dockerfile
+     container_name: my-app-php-fpm
+     restart: always
+     working_dir: /application
+     volumes:
+       - ../:/application
+       - ./php-fpm/local.ini:/usr/local/etc/php/conf.d/local.ini
+     ports:
+       - "9000:9000"  
+     depends_on:
+       - mysql  
+
+   #Nginx Service
+   webserver:
+     image: nginx:latest
+     container_name: my-webserver
+     working_dir: /application
+     volumes:
+       - ../:/application
+       - ./nginx/nginx.conf/:/etc/nginx/conf.d/default.conf
+     ports:
+       - "80:80"
+       - "443:443"
+     depends_on:
+       - app-php-fpm
+
+   #MySQL Service
+   mysql:
+     image: mysql:5.7.22
+     container_name: my-mysql
+     restart: always
+     environment:
+       - MYSQL_ROOT_PASSWORD=12345
+       - MYSQL_DATABASE=forge
+       - MYSQL_USER=user
+       - MYSQL_PASSWORD=12345
+     volumes:  
+       - ../db_data:/var/lib/mysql  
+     ports:
+       - "3306:3306" 
+
+volumes:
+  db_data:       

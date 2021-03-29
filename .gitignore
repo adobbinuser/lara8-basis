@@ -1,0 +1,10 @@
+/.idea
+/.vscode
+/node_modules
+/vendor
+/db_data
+
+.env
+
+package-lock.json
+*.lock
