@@ -1,0 +1,11 @@
+/.idea
+/.vscode
+/node_modules
+/vendor
+
+.env
+/docker/dev.env
+
+package-lock.json
+*.lock
+.editorconfig
