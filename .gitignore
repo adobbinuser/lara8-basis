@@ -2,9 +2,9 @@
 /.vscode
 /node_modules
 /vendor
-/db_data
 
 .env
+/docker/dev.env
 
 package-lock.json
 *.lock
